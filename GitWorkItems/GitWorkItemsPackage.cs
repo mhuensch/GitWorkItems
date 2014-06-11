@@ -32,6 +32,7 @@ namespace Run00.GitWorkItems
 	[ProvideMenuResource("Menus.ctmenu", 1)]
 	// This attribute registers a tool window exposed by this package.
 	[ProvideToolWindow(typeof(QueryResultsWindow))]
+	[ProvideService(typeof(IGitHub))]
 	[Guid(GuidList.GitWorkItemsPkgStringId)]
 	public sealed class GitWorkItemsPackage : Package
 	{
@@ -45,7 +46,11 @@ namespace Run00.GitWorkItems
 		public GitWorkItemsPackage()
 		{
 			Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering constructor for: {0}", this.ToString()));
+
+			var serviceContainer = this as IServiceContainer;
+			serviceContainer.AddService(typeof(IGitHub), new ServiceCreatorCallback((c, s) => { return new GitHub(this); }), true);
 		}
+
 
 		/// <summary>
 		/// This function is called when the user clicks the menu item that shows the 

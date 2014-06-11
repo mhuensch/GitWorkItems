@@ -25,7 +25,10 @@ namespace Run00.GitWorkItems.TeamExplorer
 
 		bool ITeamExplorerNavigationItem.IsVisible
 		{
-			get { return true; }
+			get 
+			{
+				return _gitHub.IsLoaded();
+			}
 		}
 
 		string ITeamExplorerNavigationItem.Text
@@ -36,17 +39,13 @@ namespace Run00.GitWorkItems.TeamExplorer
 		[ImportingConstructor]
 		public WorkItemNavigationItem([Import(typeof(SVsServiceProvider))] IServiceProvider serviceProvider)
 		{
-			_serviceProvider = serviceProvider;
+			_gitHub = serviceProvider.GetService<IGitHub>();
+			_teamExplorer = serviceProvider.GetService<ITeamExplorer>();
 		}
 
 		void ITeamExplorerNavigationItem.Execute()
 		{
-			var service = _serviceProvider.GetService<ITeamExplorer>();
-			if (service == null)
-			{
-				return;
-			}
-			service.NavigateToPage(new Guid(GuidList.WorkItemExplorerPageId), null);
+			_teamExplorer.NavigateToPage(new Guid(GuidList.WorkItemExplorerPageId), null);
 		}
 
 		void ITeamExplorerNavigationItem.Invalidate()
@@ -56,11 +55,10 @@ namespace Run00.GitWorkItems.TeamExplorer
 
 		void IDisposable.Dispose()
 		{
-			_eventHandler = null;
-			_serviceProvider = null;
 		}
 
-		private IServiceProvider _serviceProvider;
 		private PropertyChangedEventHandler _eventHandler;
+		private readonly IGitHub _gitHub;
+		private readonly ITeamExplorer _teamExplorer;
 	}
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Run00.GitWorkItems
 {
-	internal static class ExtensionsForIServiceProvider
+	internal static class ExtensionsForType
 	{
 		public static T GetService<T>(this IServiceProvider serviceProvider)
 		{
