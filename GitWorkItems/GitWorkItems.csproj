@@ -131,10 +131,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExtensionsForIServiceProvider.cs" />
-    <Compile Include="Query\MyControl.xaml.cs">
-      <DependentUpon>MyControl.xaml</DependentUpon>
+    <Compile Include="Query\QueryResultsView.xaml.cs">
+      <DependentUpon>QueryResultsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Query\MyToolWindow.cs" />
+    <Compile Include="Query\QueryResultsWindow.cs" />
     <Compile Include="Guids.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -186,7 +186,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Query\MyControl.xaml">
+    <Page Include="Query\QueryResultsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

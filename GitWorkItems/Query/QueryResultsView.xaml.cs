@@ -12,14 +12,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Run00.GitWorkItems
+namespace Run00.GitWorkItems.Query
 {
-    /// <summary>
-    /// Interaction logic for MyControl.xaml
-    /// </summary>
-    public partial class MyControl : UserControl
+
+    public partial class QueryResultsView : UserControl
     {
-        public MyControl()
+        public QueryResultsView()
         {
             InitializeComponent();
         }

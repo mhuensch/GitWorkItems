@@ -58,7 +58,7 @@ namespace Run00.GitWorkItems.TeamExplorer
 		{
 			var shell = this.serviceProvider.GetService<IVsUIShell>();
 			IVsWindowFrame winFrame;
-			var guidNo = new Guid("aa1dc5ae-24ea-440a-8268-a6dc65fcd4a0");
+			var guidNo = new Guid(GuidList.QueryResultsWindowId);
 
 			var id = new Random().Next();
 			//TODO: Replace id with the name of the query being executed
@@ -82,7 +82,7 @@ namespace Run00.GitWorkItems.TeamExplorer
 		{
 			get
 			{
-				return "Sample Page";
+				return "Work Items";
 			}
 		}
 

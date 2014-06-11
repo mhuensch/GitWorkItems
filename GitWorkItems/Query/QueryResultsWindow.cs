@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Shell;
 
-namespace Run00.GitWorkItems
+namespace Run00.GitWorkItems.Query
 {
 	/// <summary>
 	/// This class implements the tool window exposed by this package and hosts a user control.
@@ -19,13 +19,13 @@ namespace Run00.GitWorkItems
 	/// This class derives from the ToolWindowPane class provided from the MPF in order to use its 
 	/// implementation of the IVsUIElementPane interface.
 	/// </summary>
-	[Guid("aa1dc5ae-24ea-440a-8268-a6dc65fcd4a0")]
-	public class MyToolWindow : ToolWindowPane
+	[Guid(GuidList.QueryResultsWindowId)]
+	public class QueryResultsWindow : ToolWindowPane
 	{
 		/// <summary>
 		/// Standard constructor for the tool window.
 		/// </summary>
-		public MyToolWindow() : base(null)
+		public QueryResultsWindow() : base(null)
 		{
 			// Set the window title reading it from the resources.
 			this.Caption = Resources.ToolWindowTitle;
@@ -40,7 +40,7 @@ namespace Run00.GitWorkItems
 			// This is the user control hosted by the tool window; Note that, even if this class implements IDisposable,
 			// we are not calling Dispose on this object. This is because ToolWindowPane calls Dispose on 
 			// the object returned by the Content property.
-			base.Content = new MyControl();
+			base.Content = new QueryResultsView();
 		}
 	}
 }

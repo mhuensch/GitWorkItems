@@ -12,5 +12,7 @@ namespace Run00.GitWorkItems
 
 		public const string WorkItemNavigationItemId = "7D07DFF7-7B1C-4C0A-BF48-4A5DEC01BFB9";
 		public const string WorkItemExplorerPageId = "8C4F4A24-38C3-451C-A55F-9532EA61E841";
+
+		public const string QueryResultsWindowId = "aa1dc5ae-24ea-440a-8268-a6dc65fcd4a0";
 	};
 }
