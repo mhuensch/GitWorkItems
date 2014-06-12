@@ -5,6 +5,8 @@ using Microsoft.TeamFoundation.Controls;
 using Microsoft.VisualStudio.Shell.Interop;
 using System.Windows;
 using System.Collections.Generic;
+using System.Windows.Media;
+using System.Windows.Controls;
 
 namespace Run00.GitWorkItems.TeamExplorer
 {
@@ -34,6 +36,7 @@ namespace Run00.GitWorkItems.TeamExplorer
 				new { Name = "test", Value="3"},
 			};
 			newPage.Queries.ItemsSource = items;
+			newPage.Queries.MouseDoubleClick += OnSavedQueryDoubleClick;
 			PageContent = newPage;
 
 			_serviceProvider = e.ServiceProvider;
@@ -42,6 +45,23 @@ namespace Run00.GitWorkItems.TeamExplorer
 				return;
 
 			accountProvider.PropertyChanged += OnAccountInformationChanged;
+		}
+
+		void OnSavedQueryDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			var dep = (DependencyObject)e.OriginalSource;
+			while ((dep != null) && !(dep is ListViewItem))
+			{
+				dep = VisualTreeHelper.GetParent(dep);
+			}
+
+			if (dep == null)
+				return;
+
+			var item = ((ListView)sender).ItemContainerGenerator.ItemFromContainer(dep);
+
+			OpenNewTabWindow(GuidList.QueryResultsWindowId, item.GetPropertyValue<string>("Name"));
+			//var item = (MyDataItemType)MyListView.ItemContainerGenerator.ItemFromContainer(dep);
 		}
 
 		void ITeamExplorerPage.Cancel()
