@@ -12,6 +12,8 @@ using Run00.GitWorkItems.Query;
 using Microsoft.TeamFoundation.Controls;
 using System.Windows;
 using System.ComponentModel;
+using Run00.GitWorkItems.TeamExplorer;
+using Run00.GitWorkItems.WorkItem;
 
 namespace Run00.GitWorkItems
 {
@@ -35,7 +37,9 @@ namespace Run00.GitWorkItems
 	[ProvideMenuResource("Menus.ctmenu", 1)]
 	// This attribute registers a tool window exposed by this package.
 	[ProvideToolWindow(typeof(QueryResultsWindow))]
+	[ProvideToolWindow(typeof(NewWorkItemWindow))]
 	[ProvideService(typeof(IGitHub))]
+	[ProvideService(typeof(WorkItemAccountProvider))]
 	[Guid(GuidList.GitWorkItemsPkgStringId)]
 	public sealed class GitWorkItemsPackage : Package
 	{
@@ -52,6 +56,7 @@ namespace Run00.GitWorkItems
 
 			var serviceContainer = (IServiceContainer)this;
 			serviceContainer.AddService(typeof(IGitHub), new ServiceCreatorCallback((c, s) => { return new GitHub(this); }), true);
+			serviceContainer.AddService(typeof(WorkItemAccountProvider), new ServiceCreatorCallback((c, s) => { return new WorkItemAccountProvider(this); }), true);
 		}
 
 

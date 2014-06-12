@@ -154,11 +154,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PkgCmdID.cs" />
     <Compile Include="GitHub.cs" />
+    <Compile Include="TeamExplorer\Query.cs" />
+    <Compile Include="TeamExplorer\WorkItemAccountProvider.cs" />
     <Compile Include="TeamExplorer\WorkItemExplorerPage.cs" />
-    <Compile Include="TeamExplorer\WorkItemExplorerPage.xaml.cs">
-      <DependentUpon>WorkItemExplorerPage.xaml</DependentUpon>
+    <Compile Include="TeamExplorer\WorkItemExplorerView.xaml.cs">
+      <DependentUpon>WorkItemExplorerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="TeamExplorer\WorkItemNavigationItem.cs" />
+    <Compile Include="WorkItem\NewWorkItemView.xaml.cs">
+      <DependentUpon>NewWorkItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WorkItem\NewWorkItemWindow.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">
@@ -202,9 +208,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TeamExplorer\WorkItemExplorerPage.xaml">
+    <Page Include="TeamExplorer\WorkItemExplorerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WorkItem\NewWorkItemView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <PropertyGroup>

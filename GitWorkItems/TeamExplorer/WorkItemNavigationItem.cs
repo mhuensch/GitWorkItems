@@ -18,37 +18,27 @@ namespace Run00.GitWorkItems.TeamExplorer
 	public class WorkItemNavigationItem : ITeamExplorerNavigationItem
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
-
-		public string RepositoryPath { get; set; }
-		public Uri RepositoryUrl { get; set; }
-		public string Account { get; set; }
-		public string RepositoryName { get; set; }
+		
 		public bool IsVisible { get; set; }
 
-		Image ITeamExplorerNavigationItem.Image
-		{
-			get { return Resources.WorkItemIcon; }
-		}
+		public Image Image { get; set; }
+	
+		public string Text { get; set; }
 
-		string ITeamExplorerNavigationItem.Text
-		{
-			get { return "Work Items"; }
-		}
 
 		[ImportingConstructor]
 		public WorkItemNavigationItem([Import(typeof(SVsServiceProvider))] IServiceProvider serviceProvider)
 		{
-			serviceProvider
-				.GetService<ITeamExplorer>()
-				.GetPropertyValue<object>("TeamExplorerManager")
-				.GetPropertyValue<object>("ViewModel")
-				.AddEventHandler("PropertyChanged", (PropertyChangedEventHandler)((s, e) => { 
-					OnTeamExplorerManagerViewModelChanged(s, e);
-				}));
+			Image = Resources.WorkItemIcon;
+			Text = "Work Items";
 
 			_serviceProvider = serviceProvider;
 
-			this.PropertyChanged += OnMyPropertyChanged;
+			var accountProvider = _serviceProvider.GetService<WorkItemAccountProvider>() as INotifyPropertyChanged;
+			if (accountProvider == null)
+				return;
+
+			accountProvider.PropertyChanged += OnAccountInformationChanged;
 		}
 
 		void ITeamExplorerNavigationItem.Execute()
@@ -68,72 +58,15 @@ namespace Run00.GitWorkItems.TeamExplorer
 		{
 		}
 
-
-		private void OnTeamExplorerManagerViewModelChanged(object sender, PropertyChangedEventArgs e)
+		private void OnAccountInformationChanged(object sender, PropertyChangedEventArgs e)
 		{
-			var statusSercice = sender
-				.GetPropertyValue<object>("CurrentContextInfoProvider")
-				.GetPropertyValue<object>("Instance")
-				.GetPropertyValue<object>("StatusService")
-				.AddEventHandler("RepositoryPathChanged", (EventHandler)((s, a) => {
-					OnRepositoryPathChanged(s, a);
-				}));
-
-			if (statusSercice == null)
+			var accountProvider = sender as WorkItemAccountProvider;
+			if (accountProvider == null)
 				return;
 
-			RepositoryPath = GetPathFromService(statusSercice);
-		}
-
-		private void OnRepositoryPathChanged(object sender, EventArgs e)
-		{
-			RepositoryPath = GetPathFromService(sender);
-		}
-
-		private void OnMyPropertyChanged(object sender, PropertyChangedEventArgs e)
-		{
-			IsVisible = string.IsNullOrWhiteSpace(Account) == false && string.IsNullOrWhiteSpace(RepositoryName) == false;
-
-			if (e.PropertyName == "RepositoryPath")
-			{
-				UpdateRepositoryInfo(sender.GetPropertyValue<string>(e.PropertyName));
-				return;
-			}
-		}
-
-		private void UpdateRepositoryInfo(string path)
-		{
-			RepositoryUrl = null;
-			Account = null;
-			RepositoryName = null;
-
-			if (string.IsNullOrWhiteSpace(path))
-				return;
-
-			var filePath = Path.Combine(path, @".git\config");
-			if (File.Exists(filePath) == false)
-				return;
-
-			var parser = new Ini(filePath);
-			var url = parser.GetValue("url ", "remote \"origin\"");
-			if (string.IsNullOrWhiteSpace(url))
-				return;
-
-			Uri uri;
-			Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out uri);
-			if (uri == null)
-				return;
-
-			RepositoryUrl = uri;
-
-			var account = uri.AbsolutePath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-			Account = account.First();
-			RepositoryName = account.Skip(1).First();
-		}
-
-		private string GetPathFromService(object service)
-		{
-			return service.GetPropertyValue<string>("RepositoryPath");
+			IsVisible = 
+				string.IsNullOrWhiteSpace(accountProvider.AccountName) == false &&
+				string.IsNullOrWhiteSpace(accountProvider.RepositoryName) == false;
 		}
 
 		private readonly IServiceProvider _serviceProvider;

@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Run00.GitWorkItems.TeamExplorer
 {
 	/// <summary>
-	/// Interaction logic for WorkItemExplorerPage.xaml
+	/// Interaction logic for WorkItemExplorerView.xaml
 	/// </summary>
-	public partial class WorkItemExplorerPage : UserControl
+	public partial class WorkItemExplorerView : UserControl
 	{
-		public WorkItemExplorerPage()
+		public WorkItemExplorerView()
 		{
 			InitializeComponent();
 		}
