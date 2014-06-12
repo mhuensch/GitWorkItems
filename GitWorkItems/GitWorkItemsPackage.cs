@@ -9,6 +9,9 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
 using Run00.GitWorkItems.Query;
+using Microsoft.TeamFoundation.Controls;
+using System.Windows;
+using System.ComponentModel;
 
 namespace Run00.GitWorkItems
 {
@@ -47,7 +50,7 @@ namespace Run00.GitWorkItems
 		{
 			Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering constructor for: {0}", this.ToString()));
 
-			var serviceContainer = this as IServiceContainer;
+			var serviceContainer = (IServiceContainer)this;
 			serviceContainer.AddService(typeof(IGitHub), new ServiceCreatorCallback((c, s) => { return new GitHub(this); }), true);
 		}
 
@@ -62,13 +65,14 @@ namespace Run00.GitWorkItems
 			// Get the instance number 0 of this tool window. This window is single instance so this instance
 			// is actually the only one.
 			// The last flag is set to true so that if the tool window does not exists it will be created.
-			ToolWindowPane window = this.FindToolWindow(typeof(QueryResultsWindow), 0, true);
+			var window = FindToolWindow(typeof(QueryResultsWindow), 0, true);
 			if ((null == window) || (null == window.Frame))
 			{
 				throw new NotSupportedException(Resources.CanNotCreateWindow);
 			}
-			IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
-			Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());
+
+			var windowFrame = (IVsWindowFrame)window.Frame;
+			ErrorHandler.ThrowOnFailure(windowFrame.Show());
 		}
 
 
@@ -82,14 +86,14 @@ namespace Run00.GitWorkItems
 			base.Initialize();
 
 			// Add our command handlers for menu (commands must exist in the .vsct file)
-			OleMenuCommandService mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
-			if (null != mcs)
-			{
-				// Create the command for the tool window
-				CommandID toolwndCommandID = new CommandID(new Guid(GuidList.GitWorkItemsCmdSetStringId), (int)PkgCmdIDList.cmdidQueryWindow);
-				MenuCommand menuToolWin = new MenuCommand(ShowToolWindow, toolwndCommandID);
-				mcs.AddCommand(menuToolWin);
-			}
+			//var mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
+			//if (null != mcs)
+			//{
+			//	// Create the command for the tool window
+			//	var toolwndCommandID = new CommandID(new Guid(GuidList.GitWorkItemsCmdSetStringId), (int)PkgCmdIDList.cmdidQueryWindow);
+			//	var menuToolWin = new MenuCommand(ShowToolWindow, toolwndCommandID);
+			//	mcs.AddCommand(menuToolWin);
+			//}
 		}
 	}
 }
