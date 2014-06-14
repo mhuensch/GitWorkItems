@@ -70,6 +70,16 @@ namespace Run00.GitWorkItems {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] fontawesome_webfont {
+            get {
+                object obj = ResourceManager.GetObject("fontawesome_webfont", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Query Window.
         /// </summary>
         internal static string ToolWindowTitle {

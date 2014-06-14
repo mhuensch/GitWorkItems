@@ -9,25 +9,37 @@
 						 d:DesignWidth="300"
              Name="Content">
 	<Grid>
-		<StackPanel>
-			<TextBox>Title</TextBox>
-			<TextBox Height="500">Description</TextBox>
-			<UniformGrid>
-				<StackPanel>
-					<StackPanel Orientation="Horizontal">
-						<Label>Assigned To:</Label>
-						<ComboBox></ComboBox>
-					</StackPanel>
-					<StackPanel Orientation="Horizontal">
-						<Label>Milestone:</Label>
-						<ComboBox></ComboBox>
-					</StackPanel >
-				</StackPanel>
-				<StackPanel>
-					<Label>Add Labels</Label>
-				</StackPanel>
-			</UniformGrid>
-			<Button Content="Submit" Name="Submit"/>
-		</StackPanel>
+		<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" >
+			<StackPanel>
+				<TextBox >Title</TextBox>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<Grid  Grid.Column="0" >
+						<TextBox
+						ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+						ScrollViewer.VerticalScrollBarVisibility="Auto"
+						TextWrapping="Wrap"
+						AcceptsReturn="True"
+						Text="Description" />
+					</Grid>
+					<GridSplitter HorizontalAlignment="Right" 
+                  VerticalAlignment="Stretch" 
+                  Grid.Column="1" ResizeBehavior="PreviousAndNext"
+                  Width="5" Background="#FFBCBCBC"/>
+					<Grid  Grid.Column="2" >
+						<StackPanel>
+							<Expander Header="Assigned To: No one"></Expander>
+							<Expander Header="Milestone: None"></Expander>
+							<Expander Header="Tags: None"></Expander>
+						</StackPanel>
+					</Grid>
+				</Grid>
+				<Button Content="Submit" Name="Submit"/>
+			</StackPanel>
+		</ScrollViewer>
 	</Grid>
 </UserControl>

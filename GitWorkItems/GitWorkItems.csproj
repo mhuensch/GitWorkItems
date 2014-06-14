@@ -137,8 +137,12 @@
   <ItemGroup>
     <Compile Include="ExtensionsForIServiceProvider.cs" />
     <Compile Include="ExtensionsForObject.cs" />
+    <Compile Include="FontAwesome.cs" />
     <Compile Include="IGitHub.cs" />
     <Compile Include="Ini.cs" />
+    <Compile Include="Query\QueryItemView.xaml.cs">
+      <DependentUpon>QueryItemView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Query\QueryResultsView.xaml.cs">
       <DependentUpon>QueryResultsView.xaml</DependentUpon>
     </Compile>
@@ -179,6 +183,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Resource Include="Resources\fontawesome-webfont.ttf" />
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
@@ -204,6 +209,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Query\QueryItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Query\QueryResultsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

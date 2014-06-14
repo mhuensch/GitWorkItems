@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="Run00.GitWorkItems.Query.QueryItemView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" >
+	<StackPanel>
+		<Label Content="Title" />
+		<StackPanel Orientation="Horizontal">
+			<Image Name="Status" Height="25" Width="25" />
+			<Label Name="Id" Content="#2" />
+			<Label Name="Assignee" Content="Assignee" />
+			<Label Name="OpenedBy" Content="Opened by:" />
+			<Label Name="CreatedOn" Content="On:" />
+			<Label Name="NumberOfComments" Content="Comments:3" />
+		</StackPanel>
+	</StackPanel>
+</UserControl>

@@ -11,7 +11,10 @@
 			<Button Name="NewWorkItem" >New Work Item</Button>
 		</UniformGrid>
 		<TextBlock>Dashboard</TextBlock>
-		<ListView  Name="Queries" BorderBrush="{x:Null}" Background="{x:Null}" >
+		<ListBox Name="Queries">
+			
+		</ListBox>
+		<!--<ListView  Name="Queries" BorderBrush="{x:Null}" Background="{x:Null}" >
 			<ListView.Resources>
 				<Style x:Key="CustomHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
 					<Setter Property="Visibility" Value="Collapsed" />
@@ -23,7 +26,7 @@
 					<GridViewColumn Header="Value" DisplayMemberBinding="{Binding Path=Value}"/>
 				</GridView>
 			</ListView.View>
-		</ListView>
+		</ListView>-->
 		<Expander Header="Local Queries">
 			<StackPanel Margin="10,4,0,0">
 				<TextBlock>Query 1</TextBlock>
