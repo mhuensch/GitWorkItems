@@ -15,19 +15,11 @@ using System.Windows.Shapes;
 namespace Run00.GitWorkItems.WorkItem
 {
 
-    public partial class NewWorkItemView : UserControl
-    {
-			public NewWorkItemView()
-        {
-            InitializeComponent();
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions")]
-        private void button1_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show(string.Format(System.Globalization.CultureInfo.CurrentUICulture, "We are inside {0}.button1_Click()", this.ToString()),
-                            "Work Item Window");
-
-        }
-    }
+	public partial class NewWorkItemView : UserControl
+	{
+		public NewWorkItemView()
+		{
+			InitializeComponent();
+		}
+	}
 }
