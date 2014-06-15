@@ -20,26 +20,9 @@ namespace Run00.GitWorkItems.Views
 	/// </summary>
 	public partial class Explorer : UserControl
 	{
-		public event EventHandler NewItemQueryClicked;
-		public event EventHandler NewWorkItemClicked;
-
 		public Explorer()
 		{
 			InitializeComponent();
-		}
-
-		private void OnNewItemQueryClicked(object sender, RequestNavigateEventArgs e)
-		{
-			if (NewItemQueryClicked == null)
-				return;
-			NewItemQueryClicked.Invoke(this, new EventArgs());
-		}
-
-		private void OnNewWorkItemClicked(object sender, RequestNavigateEventArgs e)
-		{
-			if (NewWorkItemClicked == null)
-				return;
-			NewWorkItemClicked.Invoke(this, new EventArgs());
 		}
 	}
 }

@@ -6,17 +6,34 @@
 						 xmlns:view="clr-namespace:Run00.GitWorkItems.Views"
              mc:Ignorable="d" >
 	<StackPanel>
-		<UniformGrid Margin="0, 10, 0, -10">
-				<TextBlock HorizontalAlignment="Center"  FontSize="14">
-					<Hyperlink RequestNavigate="OnNewWorkItemClicked" NavigateUri="WorkItem" >New Work Item</Hyperlink>
-				</TextBlock>
-				<TextBlock HorizontalAlignment="Center" FontSize="14">
-					<Hyperlink RequestNavigate="OnNewItemQueryClicked" NavigateUri="ItemQuery">New Item Query</Hyperlink>
-				</TextBlock>
-		</UniformGrid>
-		<Separator />
-		<view:QueryDashboardList x:Name="Dashboard" />
-		<Separator Margin="0, 6, 0, 7"/>
-		<view:QueryList x:Name="Queries" />
+		
+		<TextBlock FontSize="14" Margin="7, 0, 7, 0">
+			<Hyperlink Name="NewItemLink" NavigateUri="New">New Work Item</Hyperlink>
+			<Rectangle VerticalAlignment="Stretch" Width="1" Height="10" Stroke="LightGray" Margin="5, 0, 5, 0"/>
+			<Hyperlink Name="NewQueryLink" NavigateUri="New">New Item Query</Hyperlink>
+		</TextBlock>
+
+		<Separator Foreground="LightGray" Margin="0, 5, 0, 0"/>
+		
+		<StackPanel Name="DashboardPanel">
+			<Label FontSize="18">Dashboards</Label>
+			<ListBox Name="Dashboards" BorderBrush="Transparent" />
+			<TextBlock Name="DashboardMotivator" TextWrapping="Wrap" Foreground="Gray" Margin="10, 0, 10, 0">
+				<Span Foreground="Black">No Dashboards Found.</Span>
+				<Hyperlink Name="AddQueryLink" NavigateUri="Add">Add</Hyperlink> a query to this dashboard to have them run automatically.
+			</TextBlock>
+		</StackPanel>
+		
+		<Separator Foreground="LightGray" Margin="0, 24, 0, 0"/>
+		
+		<StackPanel Name="QueryPanel">
+			<Label FontSize="18">Queries</Label>
+			<ListBox Name="Queries" BorderBrush="Transparent" />
+			<TextBlock Name="QueryMotivator" TextWrapping="Wrap" Foreground="Gray" Margin="10, 0, 10, 0">
+				<Span Foreground="Black">No Queries Found.</Span>
+				<Hyperlink Name="CreateQueryLink" NavigateUri="Create">Create</Hyperlink> a query to search for work items.  These queries can be private or shared with other people on your team.
+			</TextBlock>
+		</StackPanel>
+		
 	</StackPanel>
 </UserControl>

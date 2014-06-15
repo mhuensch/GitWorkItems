@@ -47,14 +47,9 @@ namespace Run00.GitWorkItems.Controls
 				return;
 
 			accountProvider.PropertyChanged += OnAccountInformationChanged;
-			_explorer.Dashboard.SharedLinkClicked += Dashboard_SharedLinkClicked;
-			_explorer.Dashboard.LocalLinkClicked += Dashboard_LocalLinkClicked;
 
-			_explorer.NewItemQueryClicked += OnNewItemQueryClicked;
-			_explorer.NewWorkItemClicked += OnNewWorkItemClicked;
-
-			//_explorer.SharedQueries.NewItemQueryClicked += OnNewItemQueryClicked;
-			//_explorer.LocalQueries.NewItemQueryClicked += OnNewItemQueryClicked;
+			_explorer.NewQueryLink.RequestNavigate += OnNewItemQueryClicked;
+			_explorer.NewItemLink.RequestNavigate += OnNewWorkItemClicked;
 		}
 
 		private void OnNewWorkItemClicked(object sender, EventArgs e)
