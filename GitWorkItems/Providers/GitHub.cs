@@ -9,9 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Run00.GitWorkItems
+namespace Run00.GitWorkItems.Providers
 {
-	public class GitHub : IGitHub
+	public class GitHub
 	{
 		public GitHub(IServiceProvider serviceProvider)
 		{

@@ -7,8 +7,10 @@ using System.Windows;
 using System.Collections.Generic;
 using System.Windows.Media;
 using System.Windows.Controls;
+using Run00.GitWorkItems.Views;
+using Run00.GitWorkItems.Providers;
 
-namespace Run00.GitWorkItems.TeamExplorer
+namespace Run00.GitWorkItems.Controls
 {
 	[TeamExplorerPage(GuidList.WorkItemExplorerPageId)]
 	public class SampleTeamExplorerPage : ITeamExplorerPage
@@ -26,18 +28,18 @@ namespace Run00.GitWorkItems.TeamExplorer
 			Title = "Work Items";
 			_test = new Query() { Title = "one"};
 
-			var newPage = new WorkItemExplorerView();
-			newPage.DataContext = _test;
-			newPage.NewWorkItem.Click += OnNewWorkItemClick;
-			newPage.NewQuery.Click += OnNewQueryClick;
+			_explorer = new Explorer();
+			_explorer.DataContext = _test;
+			//_explorer.NewWorkItem.Click += OnNewWorkItemClick;
+			//newPage.Click += OnNewQueryClick;
 			var items = new List<object>()
 			{
 				new { Name = "test", Value="2"},
 				new { Name = "test", Value="3"},
 			};
-			newPage.Queries.ItemsSource = items;
-			newPage.Queries.MouseDoubleClick += OnSavedQueryDoubleClick;
-			PageContent = newPage;
+			//newPage.Queries.ItemsSource = items;
+			//newPage.Queries.MouseDoubleClick += OnSavedQueryDoubleClick;
+			PageContent = _explorer;
 
 			_serviceProvider = e.ServiceProvider;
 			var accountProvider = _serviceProvider.GetService<WorkItemAccountProvider>() as INotifyPropertyChanged;
@@ -45,6 +47,33 @@ namespace Run00.GitWorkItems.TeamExplorer
 				return;
 
 			accountProvider.PropertyChanged += OnAccountInformationChanged;
+			_explorer.Dashboard.SharedLinkClicked += Dashboard_SharedLinkClicked;
+			_explorer.Dashboard.LocalLinkClicked += Dashboard_LocalLinkClicked;
+
+			_explorer.NewItemQueryClicked += OnNewItemQueryClicked;
+			_explorer.NewWorkItemClicked += OnNewWorkItemClicked;
+		}
+
+		private void OnNewWorkItemClicked(object sender, EventArgs e)
+		{
+			_serviceProvider.OpenNewTabWindow(GuidList.NewWorkItemWindowId, "New Work Item", true); 
+		}
+
+		private void OnNewItemQueryClicked(object sender, EventArgs e)
+		{
+			_serviceProvider.OpenNewTabWindow(GuidList.NewItemQueryWindowId, "New Item Query", true);
+		}
+
+		private void Dashboard_LocalLinkClicked(object sender, EventArgs e)
+		{
+			_explorer.LocalQueries.Queries.IsExpanded = true;
+			_explorer.SharedQueries.Queries.IsExpanded = false;
+		}
+
+		private void Dashboard_SharedLinkClicked(object sender, EventArgs e)
+		{
+			_explorer.SharedQueries.Queries.IsExpanded = true;
+			_explorer.LocalQueries.Queries.IsExpanded = false;
 		}
 
 		void OnSavedQueryDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -60,7 +89,7 @@ namespace Run00.GitWorkItems.TeamExplorer
 
 			var item = ((ListView)sender).ItemContainerGenerator.ItemFromContainer(dep);
 
-			OpenNewTabWindow(GuidList.QueryResultsWindowId, item.GetPropertyValue<string>("Name"));
+			_serviceProvider.OpenNewTabWindow(GuidList.QueryResultsWindowId, item.GetPropertyValue<string>("Name"));
 			//var item = (MyDataItemType)MyListView.ItemContainerGenerator.ItemFromContainer(dep);
 		}
 
@@ -100,32 +129,11 @@ namespace Run00.GitWorkItems.TeamExplorer
 
 		private void OnNewWorkItemClick(object sender, System.Windows.RoutedEventArgs e)
 		{
-			OpenNewTabWindow(GuidList.NewWorkItemWindowId, "New Work Item");
-		}
-
-		private void OnNewQueryClick(object sender, System.Windows.RoutedEventArgs e)
-		{
-			OpenNewTabWindow(GuidList.NewWorkItemWindowId, "New Query");
-		}
-
-		private void OpenNewTabWindow(string guid, string title)
-		{
-			var shell = _serviceProvider.GetService<IVsUIShell>();
-			IVsWindowFrame winFrame;
-			var guidNo = new Guid(guid);
-
-			var id = new Random().Next();
-			//TODO: Replace id with the name of the query being executed
-			if (shell.FindToolWindowEx(0x80000, ref guidNo, uint.Parse(id.ToString()), out winFrame) >= 0 && winFrame != null)
-			{
-				winFrame.SetProperty((int)__VSFPROPID.VSFPROPID_FrameMode, VSFRAMEMODE.VSFM_MdiChild);
-				winFrame.SetProperty((int)__VSFPROPID.VSFPROPID_Caption, title);
-				winFrame.Show();
-			}
+			_serviceProvider.OpenNewTabWindow(GuidList.NewWorkItemWindowId, "New Work Item", true);
 		}
 
 		private IServiceProvider _serviceProvider;
 		private Query _test;
-		
+		private Explorer _explorer;
 	}
 }

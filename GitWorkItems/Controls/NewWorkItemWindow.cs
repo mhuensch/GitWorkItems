@@ -7,8 +7,9 @@ using System.Windows;
 using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Shell;
+using Run00.GitWorkItems.Views;
 
-namespace Run00.GitWorkItems.WorkItem
+namespace Run00.GitWorkItems.Controls
 {
 	/// <summary>
 	/// This class implements the tool window exposed by this package and hosts a user control.
@@ -41,7 +42,7 @@ namespace Run00.GitWorkItems.WorkItem
 			// This is the user control hosted by the tool window; Note that, even if this class implements IDisposable,
 			// we are not calling Dispose on this object. This is because ToolWindowPane calls Dispose on 
 			// the object returned by the Content property.
-			base.Content = new NewWorkItemView();
+			base.Content = new WorkItemEditor();
 		}
 	}
 }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.Shell;
-using Run00.GitWorkItems.WorkItem;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -8,8 +7,9 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Linq;
 using Microsoft.VisualStudio.Shell.Interop;
+using Run00.GitWorkItems.Views;
 
-namespace Run00.GitWorkItems.Query
+namespace Run00.GitWorkItems.Controls
 {
 	/// <summary>
 	/// This class implements the tool window exposed by this package and hosts a user control.
@@ -42,7 +42,7 @@ namespace Run00.GitWorkItems.Query
 			// This is the user control hosted by the tool window; Note that, even if this class implements IDisposable,
 			// we are not calling Dispose on this object. This is because ToolWindowPane calls Dispose on 
 			// the object returned by the Content property.
-			_view = new QueryResultsView();
+			_view = new WorkItemList();
 			
 			var items = new List<object>() {
 				new { Title = "Title One", Closed = false},
@@ -52,10 +52,9 @@ namespace Run00.GitWorkItems.Query
 
 			foreach(var eachItem in items)
 			{
-				var itemView = new QueryItemView();
-				itemView.Status.Source = FontAwesome.GetIcon("\uf12a");
-				itemView.Status.Source = FontAwesome.GetIcon("\uf00c");
-
+				var itemView = new WorkItem();
+				itemView.Status.Source = "\uf12a".ToFontAwesomeIcon(Brushes.Red);
+				//itemView.Status.Source = "\uf00c".ToFontAwesomeIcon();
 
 				var checkbox = new CheckBox();
 
@@ -77,12 +76,12 @@ namespace Run00.GitWorkItems.Query
 			
 			base.Content = _view;
 
-			_preview = new NewWorkItemView();
+			_preview = new WorkItemEditor();
 		}
 
 		void listItem_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
-			OpenNewTabWindow(GuidList.NewWorkItemWindowId, "Editing");
+			((IServiceProvider)this).OpenNewTabWindow(GuidList.NewWorkItemWindowId, "Editing");
 		}
 
 		void listItem_Selected(object sender, RoutedEventArgs e)
@@ -90,7 +89,7 @@ namespace Run00.GitWorkItems.Query
 			if (_view.Preview.Children.Count == 0)
 				return;
 
-			var preivewContent = _view.Preview.Children[0] as NewWorkItemView;
+			var preivewContent = _view.Preview.Children[0] as WorkItemEditor;
 			if (preivewContent == null)
 			{
 				_view.Preview.Children.Clear();
@@ -98,23 +97,7 @@ namespace Run00.GitWorkItems.Query
 			}
 		}
 
-		private void OpenNewTabWindow(string guid, string title)
-		{
-			var shell = ((IServiceProvider)this).GetService<IVsUIShell>();
-			IVsWindowFrame winFrame;
-			var guidNo = new Guid(guid);
-
-			var id = new Random().Next();
-			//TODO: Replace id with the name of the query being executed
-			if (shell.FindToolWindowEx(0x80000, ref guidNo, uint.Parse(id.ToString()), out winFrame) >= 0 && winFrame != null)
-			{
-				winFrame.SetProperty((int)__VSFPROPID.VSFPROPID_FrameMode, VSFRAMEMODE.VSFM_MdiChild);
-				winFrame.SetProperty((int)__VSFPROPID.VSFPROPID_Caption, title);
-				winFrame.Show();
-			}
-		}
-
-		private readonly NewWorkItemView _preview;
-		private readonly QueryResultsView _view;
+		private readonly WorkItemEditor _preview;
+		private readonly WorkItemList _view;
 	}
 }

@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Run00.GitWorkItems.TeamExplorer
+namespace Run00.GitWorkItems.Views
 {
 	/// <summary>
-	/// Interaction logic for WorkItemExplorerView.xaml
+	/// Interaction logic for WorkItem.xaml
 	/// </summary>
-	public partial class WorkItemExplorerView : UserControl
+	public partial class WorkItem : UserControl
 	{
-		public WorkItemExplorerView()
+		public WorkItem()
 		{
 			InitializeComponent();
 		}

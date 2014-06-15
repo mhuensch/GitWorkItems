@@ -34,24 +34,24 @@ namespace GitWorkItems_IntegrationTests
 			}
 		}
 
-		/// <summary>
-		///A test for showing the toolwindow
-		///</summary>
-		[TestMethod()]
-		[HostType("VS IDE")]
-		public void ShowToolWindow()
-		{
-			UIThreadInvoker.Invoke((ThreadInvoker)delegate()
-			{
-				CommandID toolWindowCmd = new CommandID(new Guid(GuidList.GitWorkItemsCmdSetStringId), (int)Run00.GitWorkItems.PkgCmdIDList.cmdidQueryWindow);
+		///// <summary>
+		/////A test for showing the toolwindow
+		/////</summary>
+		//[TestMethod()]
+		//[HostType("VS IDE")]
+		//public void ShowToolWindow()
+		//{
+		//	UIThreadInvoker.Invoke((ThreadInvoker)delegate()
+		//	{
+		//		CommandID toolWindowCmd = new CommandID(new Guid(GuidList.GitWorkItemsCmdSetStringId), (int)Run00.GitWorkItems.PkgCmdIDList.cmdidQueryWindow);
 
-				TestUtils testUtils = new TestUtils();
-				testUtils.ExecuteCommand(toolWindowCmd);
+		//		TestUtils testUtils = new TestUtils();
+		//		testUtils.ExecuteCommand(toolWindowCmd);
 
-				Assert.IsTrue(testUtils.CanFindToolwindow(new Guid(Run00.GitWorkItems.GuidList.ToolWindowPersistanceStringId)));
+		//		Assert.IsTrue(testUtils.CanFindToolwindow(new Guid(Run00.GitWorkItems.GuidList.ToolWindowPersistanceStringId)));
 
-			});
-		}
+		//	});
+		//}
 
 	}
 }

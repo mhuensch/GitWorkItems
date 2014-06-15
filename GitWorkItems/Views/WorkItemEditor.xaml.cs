@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -12,12 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Run00.GitWorkItems.WorkItem
+namespace Run00.GitWorkItems.Views
 {
-
-	public partial class NewWorkItemView : UserControl
+	/// <summary>
+	/// Interaction logic for WorkItemEditor.xaml
+	/// </summary>
+	public partial class WorkItemEditor : UserControl
 	{
-		public NewWorkItemView()
+		public WorkItemEditor()
 		{
 			InitializeComponent();
 		}

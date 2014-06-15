@@ -8,12 +8,11 @@ using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
-using Run00.GitWorkItems.Query;
 using Microsoft.TeamFoundation.Controls;
 using System.Windows;
 using System.ComponentModel;
-using Run00.GitWorkItems.TeamExplorer;
-using Run00.GitWorkItems.WorkItem;
+using Run00.GitWorkItems.Controls;
+using Run00.GitWorkItems.Providers;
 
 namespace Run00.GitWorkItems
 {
@@ -38,7 +37,9 @@ namespace Run00.GitWorkItems
 	// This attribute registers a tool window exposed by this package.
 	[ProvideToolWindow(typeof(QueryResultsWindow))]
 	[ProvideToolWindow(typeof(NewWorkItemWindow))]
-	[ProvideService(typeof(IGitHub))]
+	[ProvideToolWindow(typeof(NewItemQueryWindow))]
+	// Registering provider services to be located by this package.
+	[ProvideService(typeof(GitHub))]
 	[ProvideService(typeof(WorkItemAccountProvider))]
 	[Guid(GuidList.GitWorkItemsPkgStringId)]
 	public sealed class GitWorkItemsPackage : Package
@@ -55,7 +56,7 @@ namespace Run00.GitWorkItems
 			Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering constructor for: {0}", this.ToString()));
 
 			var serviceContainer = (IServiceContainer)this;
-			serviceContainer.AddService(typeof(IGitHub), new ServiceCreatorCallback((c, s) => { return new GitHub(this); }), true);
+			serviceContainer.AddService(typeof(GitHub), new ServiceCreatorCallback((c, s) => { return new GitHub(this); }), true);
 			serviceContainer.AddService(typeof(WorkItemAccountProvider), new ServiceCreatorCallback((c, s) => { return new WorkItemAccountProvider(this); }), true);
 		}
 

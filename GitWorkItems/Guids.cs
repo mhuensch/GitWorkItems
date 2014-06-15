@@ -15,5 +15,6 @@ namespace Run00.GitWorkItems
 
 		public const string QueryResultsWindowId = "aa1dc5ae-24ea-440a-8268-a6dc65fcd4a0";
 		public const string NewWorkItemWindowId = "43ABEB10-ACD8-470B-83A8-7BB5518C350B";
+		public const string NewItemQueryWindowId = "0CA78F00-7F90-45FC-A031-7BA51E1E9164";
 	};
 }

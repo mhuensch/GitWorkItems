@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Run00.GitWorkItems.Query
+namespace Run00.GitWorkItems.Views
 {
 	/// <summary>
-	/// Interaction logic for QueryItemView.xaml
+	/// Interaction logic for QueryList.xaml
 	/// </summary>
-	public partial class QueryItemView : UserControl
+	public partial class QueryList : UserControl
 	{
-		public QueryItemView()
+		public QueryList()
 		{
 			InitializeComponent();
 		}

@@ -10,8 +10,9 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.TeamFoundation.Controls.WPF.TeamExplorer.Framework;
 using PropertyChanged;
 using System.IO;
+using Run00.GitWorkItems.Providers;
 
-namespace Run00.GitWorkItems.TeamExplorer
+namespace Run00.GitWorkItems.Controls
 {
 	[ImplementPropertyChanged]
 	[TeamExplorerNavigationItem(GuidList.WorkItemNavigationItemId, 100)]

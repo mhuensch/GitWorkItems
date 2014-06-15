@@ -8,14 +8,19 @@ using System.Windows.Media;
 
 namespace Run00.GitWorkItems
 {
-	public static class FontAwesome
+	internal static class ExtensionsForString
 	{
-		public static ImageSource GetIcon(string text)
+		public static ImageSource ToFontAwesomeIcon(this string text)
 		{
-			return GetIcon(text, FontStyles.Normal, FontWeights.Normal, FontStretches.Normal, Brushes.DarkGray);
+			return ToFontAwesomeIcon(text, Brushes.DarkGray, FontStyles.Normal, FontWeights.Normal, FontStretches.Normal);
 		}
 
-		public static ImageSource GetIcon(string text, FontStyle fontStyle, FontWeight fontWeight, FontStretch fontStretch, Brush foreBrush)
+		public static ImageSource ToFontAwesomeIcon(this string text, Brush brush)
+		{
+			return ToFontAwesomeIcon(text, brush, FontStyles.Normal, FontWeights.Normal, FontStretches.Normal);
+		}
+
+		public static ImageSource ToFontAwesomeIcon(this string text, Brush foreBrush, FontStyle fontStyle, FontWeight fontWeight, FontStretch fontStretch)
 		{
 			var fontFamily = new FontFamily("/GitWorkItems;component/Resources/#FontAwesome");
 			if (fontFamily != null && !String.IsNullOrEmpty(text))
