@@ -20,13 +20,14 @@ namespace Run00.GitWorkItems.Controls
 	/// This class derives from the ToolWindowPane class provided from the MPF in order to use its 
 	/// implementation of the IVsUIElementPane interface.
 	/// </summary>
-	[Guid(GuidList.NewItemQueryWindowId)]
-	public class NewItemQueryWindow : ToolWindowPane
+	[Guid(GuidList.NewItemPaneId)]
+	public class NewItemPane : ToolWindowPane
 	{
 		/// <summary>
 		/// Standard constructor for the tool window.
 		/// </summary>
-		public NewItemQueryWindow()	: base(null)
+		public NewItemPane()
+			: base(null)
 		{
 			// Set the window title reading it from the resources.
 			this.Caption = Resources.ToolWindowTitle;

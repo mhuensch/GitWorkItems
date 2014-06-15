@@ -35,12 +35,12 @@ namespace Run00.GitWorkItems
 	// This attribute is needed to let the shell know that this package exposes some menus.
 	[ProvideMenuResource("Menus.ctmenu", 1)]
 	// This attribute registers a tool window exposed by this package.
-	[ProvideToolWindow(typeof(QueryResultsWindow))]
-	[ProvideToolWindow(typeof(NewWorkItemWindow))]
-	[ProvideToolWindow(typeof(NewItemQueryWindow))]
+	[ProvideToolWindow(typeof(QueryResultsPane))]
+	[ProvideToolWindow(typeof(NewItemPane))]
+	[ProvideToolWindow(typeof(NewQueryPane))]
 	// Registering provider services to be located by this package.
 	[ProvideService(typeof(GitHub))]
-	[ProvideService(typeof(WorkItemAccountProvider))]
+	[ProvideService(typeof(AccountProvider))]
 	[Guid(GuidList.GitWorkItemsPkgStringId)]
 	public sealed class GitWorkItemsPackage : Package
 	{
@@ -57,7 +57,7 @@ namespace Run00.GitWorkItems
 
 			var serviceContainer = (IServiceContainer)this;
 			serviceContainer.AddService(typeof(GitHub), new ServiceCreatorCallback((c, s) => { return new GitHub(this); }), true);
-			serviceContainer.AddService(typeof(WorkItemAccountProvider), new ServiceCreatorCallback((c, s) => { return new WorkItemAccountProvider(this); }), true);
+			serviceContainer.AddService(typeof(AccountProvider), new ServiceCreatorCallback((c, s) => { return new AccountProvider(this); }), true);
 		}
 
 
@@ -71,7 +71,7 @@ namespace Run00.GitWorkItems
 			// Get the instance number 0 of this tool window. This window is single instance so this instance
 			// is actually the only one.
 			// The last flag is set to true so that if the tool window does not exists it will be created.
-			var window = FindToolWindow(typeof(QueryResultsWindow), 0, true);
+			var window = FindToolWindow(typeof(QueryResultsPane), 0, true);
 			if ((null == window) || (null == window.Frame))
 			{
 				throw new NotSupportedException(Resources.CanNotCreateWindow);

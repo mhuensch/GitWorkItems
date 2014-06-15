@@ -135,11 +135,11 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\NewItemQueryWindow.cs" />
+    <Compile Include="Controls\NewQueryPane.cs" />
     <Compile Include="Extensions\ExtensionsForIServiceProvider.cs" />
     <Compile Include="Extensions\ExtensionsForObject.cs" />
     <Compile Include="Extensions\ExtensionsForString.cs" />
-    <Compile Include="Controls\QueryResultsWindow.cs" />
+    <Compile Include="Controls\QueryResultsPane.cs" />
     <Compile Include="Guids.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -151,9 +151,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\GitHub.cs" />
     <Compile Include="Providers\Query.cs" />
-    <Compile Include="Providers\WorkItemAccountProvider.cs" />
-    <Compile Include="Controls\WorkItemExplorerPage.cs" />
-    <Compile Include="Controls\WorkItemNavigationItem.cs" />
+    <Compile Include="Providers\AccountProvider.cs" />
+    <Compile Include="Controls\ExplorerPage.cs" />
+    <Compile Include="Controls\ExplorerButton.cs" />
     <Compile Include="TempIni.cs" />
     <Compile Include="Views\Explorer.xaml.cs">
       <DependentUpon>Explorer.xaml</DependentUpon>
@@ -170,7 +170,7 @@
     <Compile Include="Views\WorkItemList.xaml.cs">
       <DependentUpon>WorkItemList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\NewWorkItemWindow.cs" />
+    <Compile Include="Controls\NewItemPane.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">
