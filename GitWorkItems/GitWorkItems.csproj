@@ -160,6 +160,9 @@
     <Compile Include="Views\QueryDashboard.xaml.cs">
       <DependentUpon>QueryDashboard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\QueryEditor.xaml.cs">
+      <DependentUpon>QueryEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WorkItem.xaml.cs">
       <DependentUpon>WorkItem.xaml</DependentUpon>
     </Compile>
@@ -215,6 +218,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\QueryDashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\QueryEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
