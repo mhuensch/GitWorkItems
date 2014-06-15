@@ -154,7 +154,6 @@
     <Compile Include="Providers\AccountProvider.cs" />
     <Compile Include="Controls\ExplorerPage.cs" />
     <Compile Include="Controls\ExplorerButton.cs" />
-    <Compile Include="TempIni.cs" />
     <Compile Include="Views\Explorer.xaml.cs">
       <DependentUpon>Explorer.xaml</DependentUpon>
     </Compile>

@@ -8,6 +8,7 @@ using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Run00.GitWorkItems.Providers
@@ -29,7 +30,8 @@ namespace Run00.GitWorkItems.Providers
 				.GetService<ITeamExplorer>()
 				.GetPropertyValue<object>("TeamExplorerManager")
 				.GetPropertyValue<object>("ViewModel")
-				.AddEventHandler("PropertyChanged", (PropertyChangedEventHandler)((s, e) => {
+				.AddEventHandler("PropertyChanged", (PropertyChangedEventHandler)((s, e) =>
+				{
 					OnTeamExplorerManagerViewModelChanged(s, e);
 				}));
 		}
@@ -40,7 +42,8 @@ namespace Run00.GitWorkItems.Providers
 				.GetPropertyValue<object>("CurrentContextInfoProvider")
 				.GetPropertyValue<object>("Instance")
 				.GetPropertyValue<object>("StatusService")
-				.AddEventHandler("RepositoryPathChanged", (EventHandler)((s, a) => {
+				.AddEventHandler("RepositoryPathChanged", (EventHandler)((s, a) =>
+				{
 					OnRepositoryPathChanged(s, a);
 				}));
 
@@ -69,8 +72,9 @@ namespace Run00.GitWorkItems.Providers
 			if (File.Exists(filePath) == false)
 				return;
 
-			var parser = new Ini(filePath);
-			var url = parser.GetValue("url ", "remote \"origin\"");
+			var ini = ReadIni(filePath);
+			var url = ini["remote \"origin\""]["url"];
+
 			if (string.IsNullOrWhiteSpace(url))
 				return;
 
@@ -85,6 +89,40 @@ namespace Run00.GitWorkItems.Providers
 			AccountName = account.First();
 			RepositoryName = account.Skip(1).First();
 		}
+
+		private Dictionary<string, Dictionary<string, string>> ReadIni(string filePath)
+		{
+			string data = File.ReadAllText(filePath);
+			string pattern = @"
+				^                           # Beginning of the line
+				((?:\[)                     # Section Start
+						 (?<Section>[^\]]*)     # Actual Section text into Section Group
+				 (?:\])                     # Section End then EOL/EOB
+				 (?:[\r\n]{0,}|\Z))         # Match but don't capture the CRLF or EOB
+				 (                          # Begin capture groups (Key Value Pairs)
+					(?!\[)                    # Stop capture groups if a [ is found; new section
+					(?<Key>[^=]*?)            # Any text before the =, matched few as possible
+					(?:=)                     # Get the = now
+					(?<Value>[^\r\n]*)        # Get everything that is not an Line Changes
+					(?:[\r\n]{0,4})           # MBDC \r\n
+					)+                        # End Capture groups";
+
+			return (
+				from Match m in Regex.Matches(data, pattern, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline)
+				select new
+				{
+					Section = m.Groups["Section"].Value.Trim(),
+
+					kvps = (
+						from cpKey in m.Groups["Key"].Captures.Cast<Capture>().Select((a, i) => new { Value=a.Value.Trim(), i })
+						join cpValue in m.Groups["Value"].Captures.Cast<Capture>().Select((b, i) => new { b.Value, i }) on cpKey.i equals cpValue.i
+						select new KeyValuePair<string, string>(cpKey.Value, cpValue.Value)).ToDictionary(kvp => kvp.Key, kvp => kvp.Value)
+
+				}).ToDictionary(itm => itm.Section, itm => itm.kvps);
+
+			//InIFile["WindowSettings"]["Window Name"];
+		}
+
 
 	}
 }
