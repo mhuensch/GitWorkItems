@@ -52,6 +52,9 @@ namespace Run00.GitWorkItems.Controls
 
 			_explorer.NewItemQueryClicked += OnNewItemQueryClicked;
 			_explorer.NewWorkItemClicked += OnNewWorkItemClicked;
+
+			//_explorer.SharedQueries.NewItemQueryClicked += OnNewItemQueryClicked;
+			//_explorer.LocalQueries.NewItemQueryClicked += OnNewItemQueryClicked;
 		}
 
 		private void OnNewWorkItemClicked(object sender, EventArgs e)
@@ -66,14 +69,14 @@ namespace Run00.GitWorkItems.Controls
 
 		private void Dashboard_LocalLinkClicked(object sender, EventArgs e)
 		{
-			_explorer.LocalQueries.Queries.IsExpanded = true;
-			_explorer.SharedQueries.Queries.IsExpanded = false;
+			//_explorer.LocalQueries.Queries.IsExpanded = true;
+			//_explorer.SharedQueries.Queries.IsExpanded = false;
 		}
 
 		private void Dashboard_SharedLinkClicked(object sender, EventArgs e)
 		{
-			_explorer.SharedQueries.Queries.IsExpanded = true;
-			_explorer.LocalQueries.Queries.IsExpanded = false;
+			//_explorer.SharedQueries.Queries.IsExpanded = true;
+			//_explorer.LocalQueries.Queries.IsExpanded = false;
 		}
 
 		void OnSavedQueryDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)

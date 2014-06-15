@@ -20,9 +20,18 @@ namespace Run00.GitWorkItems.Views
 	/// </summary>
 	public partial class QueryList : UserControl
 	{
+		public EventHandler NewItemQueryClicked;
+
 		public QueryList()
 		{
 			InitializeComponent();
+		}
+
+		private void OnNewItemQueryClicked(object sender, RequestNavigateEventArgs e)
+		{
+			if (NewItemQueryClicked == null)
+				return;
+			NewItemQueryClicked.Invoke(this, new EventArgs());
 		}
 	}
 }

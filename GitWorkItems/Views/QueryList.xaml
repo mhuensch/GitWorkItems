@@ -5,20 +5,29 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-	<Expander Name="Queries" Header="Local Queries">
-		<ListView BorderBrush="Transparent">
-			<TextBlock TextWrapping="Wrap" Foreground="Gray" Margin="10">
-				<Span Foreground="Black">No Dashboards Found.</Span> Add a query from your 
-				<Hyperlink RequestNavigate="OnLocalLinkClicked" NavigateUri="Local">Local</Hyperlink> 
-				or 
-				<Hyperlink RequestNavigate="OnSharedLinkClicked" NavigateUri="Shared">Shared</Hyperlink>
-				queries to this dashboard to have them run automatically.
-			</TextBlock>
-			<!--
+	<!--<Expander Name="Queries" Header="Local Queries">
+		<StackPanel>
+			<ListView BorderBrush="Transparent">
+				--><!--
 			<Label>Query 1</Label>
 			<Label>Query 2</Label>
 			<Label>Query 2</Label>
-			-->
-		</ListView>
-	</Expander>
+			--><!--
+			</ListView>
+			<TextBlock TextWrapping="Wrap" Foreground="Gray" Margin="10">
+				<Span Foreground="Black">No Queries Found.</Span> Create a 
+				<Hyperlink RequestNavigate="OnNewItemQueryClicked" NavigateUri="Local">New Item Query</Hyperlink>.
+			</TextBlock>
+		</StackPanel>
+	</Expander>-->
+
+	<StackPanel>
+		<Label FontSize="18">Queries</Label>
+		<ListBox Name="Queries" BorderBrush="Transparent" />
+		<TextBlock TextWrapping="Wrap" Foreground="Gray" Margin="10">
+				<Span Foreground="Black">No Queries Found.</Span>
+				<Hyperlink>Create a query</Hyperlink>.
+		</TextBlock>
+	</StackPanel>
+
 </UserControl>
