@@ -30,15 +30,13 @@ namespace Run00.GitWorkItems.Controls
 
 			_explorer = new Explorer();
 			_explorer.DataContext = _test;
-			//_explorer.NewWorkItem.Click += OnNewWorkItemClick;
-			//newPage.Click += OnNewQueryClick;
+
 			var items = new List<object>()
 			{
 				new { Name = "test", Value="2"},
 				new { Name = "test", Value="3"},
 			};
-			//newPage.Queries.ItemsSource = items;
-			//newPage.Queries.MouseDoubleClick += OnSavedQueryDoubleClick;
+
 			PageContent = _explorer;
 
 			_serviceProvider = e.ServiceProvider;
@@ -50,45 +48,8 @@ namespace Run00.GitWorkItems.Controls
 
 			_explorer.NewQueryLink.RequestNavigate += OnNewItemQueryClicked;
 			_explorer.NewItemLink.RequestNavigate += OnNewWorkItemClicked;
-		}
-
-		private void OnNewWorkItemClicked(object sender, EventArgs e)
-		{
-			_serviceProvider.OpenNewTabWindow(GuidList.NewItemPaneId, "New Work Item", true); 
-		}
-
-		private void OnNewItemQueryClicked(object sender, EventArgs e)
-		{
-			_serviceProvider.OpenNewTabWindow(GuidList.NewQueryPaneId, "New Item Query", true);
-		}
-
-		private void Dashboard_LocalLinkClicked(object sender, EventArgs e)
-		{
-			//_explorer.LocalQueries.Queries.IsExpanded = true;
-			//_explorer.SharedQueries.Queries.IsExpanded = false;
-		}
-
-		private void Dashboard_SharedLinkClicked(object sender, EventArgs e)
-		{
-			//_explorer.SharedQueries.Queries.IsExpanded = true;
-			//_explorer.LocalQueries.Queries.IsExpanded = false;
-		}
-
-		void OnSavedQueryDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-		{
-			var dep = (DependencyObject)e.OriginalSource;
-			while ((dep != null) && !(dep is ListViewItem))
-			{
-				dep = VisualTreeHelper.GetParent(dep);
-			}
-
-			if (dep == null)
-				return;
-
-			var item = ((ListView)sender).ItemContainerGenerator.ItemFromContainer(dep);
-
-			_serviceProvider.OpenNewTabWindow(GuidList.QueryResultsPaneId, item.GetPropertyValue<string>("Name"));
-			//var item = (MyDataItemType)MyListView.ItemContainerGenerator.ItemFromContainer(dep);
+			_explorer.CreateQueryLink.RequestNavigate += OnCreateQueryClicked;
+			_explorer.AddQueryLink.RequestNavigate += OnAddQueryClicked;
 		}
 
 		void ITeamExplorerPage.Cancel()
@@ -115,6 +76,25 @@ namespace Run00.GitWorkItems.Controls
 		{
 		}
 
+		private void OnNewWorkItemClicked(object sender, EventArgs e)
+		{
+			_serviceProvider.OpenNewTabWindow(GuidList.NewItemPaneId, "New Work Item", true);
+		}
+
+		private void OnNewItemQueryClicked(object sender, EventArgs e)
+		{
+			_serviceProvider.OpenNewTabWindow(GuidList.NewQueryPaneId, "New Item Query", true);
+		}
+
+		private void OnCreateQueryClicked(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+		{
+			_serviceProvider.OpenNewTabWindow(GuidList.NewQueryPaneId, "New Item Query", true);
+		}
+		private void OnAddQueryClicked(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+		{
+			//throw new NotImplementedException();
+		}
+
 		private void OnAccountInformationChanged(object sender, PropertyChangedEventArgs e)
 		{
 
@@ -125,10 +105,22 @@ namespace Run00.GitWorkItems.Controls
 			_test.Title = "two";
 		}
 
-		private void OnNewWorkItemClick(object sender, System.Windows.RoutedEventArgs e)
-		{
-			_serviceProvider.OpenNewTabWindow(GuidList.NewItemPaneId, "New Work Item", true);
-		}
+		//void OnSavedQueryDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		//{
+		//	var dep = (DependencyObject)e.OriginalSource;
+		//	while ((dep != null) && !(dep is ListViewItem))
+		//	{
+		//		dep = VisualTreeHelper.GetParent(dep);
+		//	}
+
+		//	if (dep == null)
+		//		return;
+
+		//	var item = ((ListView)sender).ItemContainerGenerator.ItemFromContainer(dep);
+
+		//	_serviceProvider.OpenNewTabWindow(GuidList.QueryResultsPaneId, item.GetPropertyValue<string>("Name"));
+		//	//var item = (MyDataItemType)MyListView.ItemContainerGenerator.ItemFromContainer(dep);
+		//}
 
 		private IServiceProvider _serviceProvider;
 		private Query _test;
