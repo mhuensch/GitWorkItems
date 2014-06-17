@@ -26,10 +26,21 @@ namespace Run00.GitWorkItems.Controls
 		void ITeamExplorerPage.Initialize(object sender, PageInitializeEventArgs e)
 		{
 			Title = "Work Items";
+
+			_serviceProvider = e.ServiceProvider;
+			_extensionProvider = _serviceProvider.GetService<ExtensionProvider>();
+
+			//TODO: Remove this
 			_test = new Query() { Title = "one"};
 
 			_explorer = new Explorer();
 			_explorer.DataContext = _test;
+
+			_explorer.NewQueryLink.RequestNavigate += OnNewItemQueryClicked;
+			_explorer.NewItemLink.RequestNavigate += OnNewWorkItemClicked;
+			_explorer.CreateQueryLink.RequestNavigate += OnCreateQueryClicked;
+			_explorer.AddQueryLink.RequestNavigate += OnAddQueryClicked;
+			_explorer.QuerySelected += OnQuerySelected;
 
 			var items = new List<object>()
 			{
@@ -39,17 +50,7 @@ namespace Run00.GitWorkItems.Controls
 
 			PageContent = _explorer;
 
-			_serviceProvider = e.ServiceProvider;
-			var accountProvider = _serviceProvider.GetService<AccountProvider>() as INotifyPropertyChanged;
-			if (accountProvider == null)
-				return;
-
-			accountProvider.PropertyChanged += OnAccountInformationChanged;
-
-			_explorer.NewQueryLink.RequestNavigate += OnNewItemQueryClicked;
-			_explorer.NewItemLink.RequestNavigate += OnNewWorkItemClicked;
-			_explorer.CreateQueryLink.RequestNavigate += OnCreateQueryClicked;
-			_explorer.AddQueryLink.RequestNavigate += OnAddQueryClicked;
+			_explorer.DataContext = _extensionProvider;			
 		}
 
 		void ITeamExplorerPage.Cancel()
@@ -60,6 +61,7 @@ namespace Run00.GitWorkItems.Controls
 		{
 			return null;
 		}
+
 		void ITeamExplorerPage.Loaded(object sender, PageLoadedEventArgs e)
 		{
 		}
@@ -90,6 +92,7 @@ namespace Run00.GitWorkItems.Controls
 		{
 			_serviceProvider.OpenNewTabWindow(GuidList.NewQueryPaneId, "New Item Query", true);
 		}
+
 		private void OnAddQueryClicked(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
 		{
 			//throw new NotImplementedException();
@@ -103,6 +106,15 @@ namespace Run00.GitWorkItems.Controls
 				return;
 
 			_test.Title = "two";
+		}
+
+		private void OnQuerySelected(object sender, EventArgs e)
+		{
+			var query = sender as Query;
+			if (query == null)
+				return;
+
+			MessageBox.Show(query.Title);
 		}
 
 		//void OnSavedQueryDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -123,7 +135,10 @@ namespace Run00.GitWorkItems.Controls
 		//}
 
 		private IServiceProvider _serviceProvider;
-		private Query _test;
 		private Explorer _explorer;
+
+		//TODO: Remove this
+		private Query _test;
+		private ExtensionProvider _extensionProvider;
 	}
 }

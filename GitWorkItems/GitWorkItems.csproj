@@ -136,11 +136,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\NewQueryPane.cs" />
+    <Compile Include="Controls\QueryListPane.cs" />
     <Compile Include="Extensions\ExtensionsForIServiceProvider.cs" />
     <Compile Include="Extensions\ExtensionsForObject.cs" />
     <Compile Include="Extensions\ExtensionsForString.cs" />
     <Compile Include="Controls\QueryResultsPane.cs" />
     <Compile Include="Guids.cs" />
+    <Compile Include="Providers\ExtensionProvider.cs" />
+    <Compile Include="Providers\WorkItem.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -149,7 +152,6 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GitWorkItemsPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\GitHub.cs" />
     <Compile Include="Providers\Query.cs" />
     <Compile Include="Providers\AccountProvider.cs" />
     <Compile Include="Controls\ExplorerPage.cs" />
@@ -162,6 +164,9 @@
     </Compile>
     <Compile Include="Views\QueryEditor.xaml.cs">
       <DependentUpon>QueryEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\QueryList.xaml.cs">
+      <DependentUpon>QueryList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WorkItem.xaml.cs">
       <DependentUpon>WorkItem.xaml</DependentUpon>
@@ -222,6 +227,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\QueryEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\QueryList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

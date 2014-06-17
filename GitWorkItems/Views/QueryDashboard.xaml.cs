@@ -20,9 +20,21 @@ namespace Run00.GitWorkItems.Views
 	/// </summary>
 	public partial class QueryDashboard : UserControl
 	{
+		public event EventHandler QueryDeleteSelected;
+
 		public QueryDashboard()
 		{
 			InitializeComponent();
+		}
+
+		private void DeleteEvent(object sender, EventArgs args)
+		{
+			var query = ((System.Windows.FrameworkElement)(sender)).DataContext;
+
+			if (QueryDeleteSelected == null)
+				return;
+
+			QueryDeleteSelected.Invoke(query, new EventArgs());
 		}
 	}
 }

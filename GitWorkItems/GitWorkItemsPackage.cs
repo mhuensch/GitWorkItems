@@ -35,12 +35,13 @@ namespace Run00.GitWorkItems
 	// This attribute is needed to let the shell know that this package exposes some menus.
 	[ProvideMenuResource("Menus.ctmenu", 1)]
 	// This attribute registers a tool window exposed by this package.
+	[ProvideToolWindow(typeof(QueryListPane))]
 	[ProvideToolWindow(typeof(QueryResultsPane))]
 	[ProvideToolWindow(typeof(NewItemPane))]
 	[ProvideToolWindow(typeof(NewQueryPane))]
 	// Registering provider services to be located by this package.
-	[ProvideService(typeof(GitHub))]
-	[ProvideService(typeof(AccountProvider))]
+	[ProvideService(typeof(ExtensionProvider))]
+	[ProvideService(typeof(AccountProvider))]	
 	[Guid(GuidList.GitWorkItemsPkgStringId)]
 	public sealed class GitWorkItemsPackage : Package
 	{
@@ -56,7 +57,7 @@ namespace Run00.GitWorkItems
 			Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering constructor for: {0}", this.ToString()));
 
 			var serviceContainer = (IServiceContainer)this;
-			serviceContainer.AddService(typeof(GitHub), new ServiceCreatorCallback((c, s) => { return new GitHub(this); }), true);
+			serviceContainer.AddService(typeof(ExtensionProvider), new ServiceCreatorCallback((c, s) => { return new ExtensionProvider(this); }), true);
 			serviceContainer.AddService(typeof(AccountProvider), new ServiceCreatorCallback((c, s) => { return new AccountProvider(this); }), true);
 		}
 

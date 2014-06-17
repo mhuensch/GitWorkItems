@@ -11,5 +11,19 @@ namespace Run00.GitWorkItems.Providers
 	public class Query
 	{
 		public string Title { get; set; }
+		
+		public int Count { get; set; }
+		
+		public int UnreadCount { get; set; }
+
+		public ICollection<WorkItem> WorkItems { get; set;}
+
+		public Query()
+		{
+			WorkItems = new List<WorkItem>();
+			{
+				new WorkItem { Title = "WorkItem1", Unread = true };
+			}
+		}
 	}
 }
